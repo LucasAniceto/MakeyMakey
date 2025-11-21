@@ -3,8 +3,14 @@ import random
 import time
 import sys
 import math
+import os
 
 pygame.init()
+# Inicializa o mixer de áudio (se disponível)
+try:
+    pygame.mixer.init()
+except Exception:
+    print("Aviso: pygame.mixer não pôde ser inicializado. Áudio pode não funcionar.")
 
 FPS = 60
 
@@ -61,6 +67,40 @@ class GeniusGame:
         
         self.font = pygame.font.Font(None, 48)
         self.small_font = pygame.font.Font(None, 36)
+
+        # Carregar sons para cada cor. Coloque arquivos em ./assets/red.wav, etc.
+        # Se os arquivos não existirem, o jogo continuará sem áudio e mostrará um aviso.
+        assets_dir = os.path.join(os.path.dirname(__file__), "assets")
+        self.sounds = {}
+        sound_files = {
+            'red': os.path.join(assets_dir, 'red.wav'),
+            'green': os.path.join(assets_dir, 'green.wav'),
+            'blue': os.path.join(assets_dir, 'blue.wav'),
+            'yellow': os.path.join(assets_dir, 'yellow.wav'),
+            # Som tocado quando o jogador erra
+            'game_over': os.path.join(assets_dir, 'game_over.wav')
+        }
+
+        for color, path in sound_files.items():
+            try:
+                if os.path.isfile(path):
+                    self.sounds[color] = pygame.mixer.Sound(path)
+                else:
+                    self.sounds[color] = None
+                    print(f"Aviso: arquivo de som não encontrado para '{color}': {path}")
+            except Exception as e:
+                self.sounds[color] = None
+                print(f"Erro ao carregar som para {color}: {e}")
+
+    def play_sound(self, color):
+        """Toca o som associado à cor, se disponível."""
+        try:
+            sound = self.sounds.get(color)
+            if sound:
+                sound.play()
+        except Exception:
+            # Não falhar o jogo se o áudio der problema
+            pass
         
     def generate_sequence(self):
         self.sequence.append(random.choice(['red', 'green', 'blue', 'yellow']))
@@ -86,6 +126,8 @@ class GeniusGame:
                 if self.active_button is None:
                     self.active_button = self.sequence[self.sequence_index]
                     self.button_flash_time = current_time
+                    # Toca som ao mostrar a cor na sequência
+                    self.play_sound(self.active_button)
                 elif current_time - self.button_flash_time > self.flash_duration:
                     self.active_button = None
                     self.sequence_index += 1
@@ -119,9 +161,16 @@ class GeniusGame:
         self.player_sequence.append(color)
         self.active_button = color
         self.button_flash_time = pygame.time.get_ticks()
+        # Toca o som correspondente a cor quando jogador pressiona
+        self.play_sound(color)
         
         if self.player_sequence[-1] != self.sequence[len(self.player_sequence) - 1]:
             self.game_state = "fim_jogo"
+            # Tocar som de game over
+            try:
+                self.play_sound('game_over')
+            except Exception:
+                pass
         elif len(self.player_sequence) == len(self.sequence):
             self.game_state = "completo"
             self.completion_time = pygame.time.get_ticks()
@@ -171,32 +220,32 @@ class GeniusGame:
             level_text = self.font.render(f"Nivel: {self.current_level}", True, WHITE)
             self.screen.blit(level_text, (WINDOW_WIDTH // 2 - level_text.get_width() // 2, WINDOW_HEIGHT - 150))
         
-        if self.game_state == "esperando":
-            # Posicionar textos abaixo do círculo do Genius
+       
+        if self.game_state == "esperando" and len(self.sequence) == 0 and self.current_level == 1:
             text_start_y = CIRCLE_CENTER[1] + CIRCLE_RADIUS + 80
-            
+
             start_text = self.font.render("Pressione ESPACO para iniciar", True, WHITE)
             self.screen.blit(start_text, (WINDOW_WIDTH // 2 - start_text.get_width() // 2, text_start_y))
-            
+
             controls_title = self.font.render("Controles:", True, WHITE)
             self.screen.blit(controls_title, (WINDOW_WIDTH // 2 - controls_title.get_width() // 2, text_start_y + 80))
-            
-            # Organizar controles nas laterais da tela
+
+        
             left_margin = 50
             right_margin = WINDOW_WIDTH - 250
-            
+
             control_up = self.small_font.render("CIMA = Azul", True, BLUE)
             self.screen.blit(control_up, (left_margin, text_start_y + 130))
-            
+
             control_left = self.small_font.render("ESQUERDA = Verde", True, GREEN)
             self.screen.blit(control_left, (left_margin, text_start_y + 170))
-            
+
             control_down = self.small_font.render("BAIXO = Amarelo", True, YELLOW)
             self.screen.blit(control_down, (right_margin, text_start_y + 130))
-            
+
             control_right = self.small_font.render("DIREITA = Vermelho", True, RED)
             self.screen.blit(control_right, (right_margin, text_start_y + 170))
-            
+
             exit_text = self.small_font.render("Pressione ESC para sair", True, WHITE)
             self.screen.blit(exit_text, (WINDOW_WIDTH // 2 - exit_text.get_width() // 2, text_start_y + 230))
         elif self.game_state == "mostrando":
@@ -209,10 +258,11 @@ class GeniusGame:
             success_text = self.font.render("Correto! Avancando para o proximo nivel...", True, WHITE)
             self.screen.blit(success_text, (WINDOW_WIDTH // 2 - success_text.get_width() // 2, WINDOW_HEIGHT - 100))
         elif self.game_state == "fim_jogo":
+            
             game_over_text = self.font.render("Fim de Jogo!", True, WHITE)
-            self.screen.blit(game_over_text, (WINDOW_WIDTH // 2 - game_over_text.get_width() // 2, WINDOW_HEIGHT - 150))
+            self.screen.blit(game_over_text, (WINDOW_WIDTH // 2 - game_over_text.get_width() // 2, WINDOW_HEIGHT - 180))
             restart_text = self.font.render("Pressione ESPACO para reiniciar", True, WHITE)
-            self.screen.blit(restart_text, (WINDOW_WIDTH // 2 - restart_text.get_width() // 2, WINDOW_HEIGHT - 100))
+            self.screen.blit(restart_text, (WINDOW_WIDTH // 2 - restart_text.get_width() // 2, WINDOW_HEIGHT - 120))
             
         pygame.display.flip()
         
@@ -237,6 +287,12 @@ class GeniusGame:
                         self.handle_keyboard_input('yellow')
                     elif event.key == pygame.K_RIGHT:
                         self.handle_keyboard_input('red')
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    # Permitir clicar nos setores com o mouse (toca som também)
+                    pos = pygame.mouse.get_pos()
+                    sector = self.get_clicked_sector(pos)
+                    if sector and self.game_state == "entrada":
+                        self.handle_keyboard_input(sector)
                         
             if self.game_state == "mostrando":
                 self.update_sequence_display()
