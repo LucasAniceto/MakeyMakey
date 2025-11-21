@@ -30,13 +30,14 @@ class GameSelector:
             {"name": "Jogo Dos Blocos", "file": "tetris_game.py"},
             {"name": "Jogo Dos Carros", "file": "car_dodge.py"},
             {"name": "Jogo Da Musica", "file": "guitar_hero.py"},
-	    {"name": "Jogo De Memoria", "file": "genius_game.py"}
+            {"name": "Jogo De Memoria", "file": "genius_game.py"},
+            {"name": "Quiz Privacidade", "file": "quiz_game.py"}
         ]
         
-        self.button_height = 60
+        self.button_height = 45
         self.button_width = 400
-        self.button_spacing = 20
-        self.start_y = 140
+        self.button_spacing = 12
+        self.start_y = 100
         
         self.selected_index = 0
        	
