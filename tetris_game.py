@@ -292,12 +292,12 @@ class TetrisGame:
         lines_text = self.small_font.render(f"Linhas: {self.lines_cleared}", True, WHITE)
         self.screen.blit(lines_text, (GAME_AREA_X + GRID_WIDTH * BLOCK_SIZE + 20, 130))
         
-        # Controls
+        # Controls (standardized: ↑ Amarelo, ← Vermelho, ↓ Azul, → Verde)
         controls = [
-            "← Mover Esquerda",
-            "→ Mover Direita",
-            "↓ Mover Baixo",
-            "↑ Girar"
+            "← (Vermelho) Esquerda",
+            "→ (Verde) Direita",
+            "↓ (Azul) Baixo",
+            "↑ (Amarelo) Girar"
         ]
         
         for i, control in enumerate(controls):

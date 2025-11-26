@@ -76,10 +76,10 @@ class GuitarHero:
         start_x = button_spacing
         
         self.buttons = [
-            GuitarButton(start_x, BUTTON_Y, YELLOW, pygame.K_LEFT),
-            GuitarButton(start_x + BUTTON_WIDTH + button_spacing, BUTTON_Y, GREEN, pygame.K_DOWN),
-            GuitarButton(start_x + 2 * (BUTTON_WIDTH + button_spacing), BUTTON_Y, BLUE, pygame.K_UP),
-            GuitarButton(start_x + 3 * (BUTTON_WIDTH + button_spacing), BUTTON_Y, RED, pygame.K_RIGHT)
+            GuitarButton(start_x, BUTTON_Y, YELLOW, pygame.K_UP),
+            GuitarButton(start_x + BUTTON_WIDTH + button_spacing, BUTTON_Y, RED, pygame.K_LEFT),
+            GuitarButton(start_x + 2 * (BUTTON_WIDTH + button_spacing), BUTTON_Y, BLUE, pygame.K_DOWN),
+            GuitarButton(start_x + 3 * (BUTTON_WIDTH + button_spacing), BUTTON_Y, GREEN, pygame.K_RIGHT)
         ]
         
         self.font = pygame.font.Font(None, 36)
@@ -162,7 +162,7 @@ class GuitarHero:
         self.screen.blit(stats_text, (20, 50))
 
         instructions = [
-            "← Amarelo  ↓ Verde  ↑ Azul  → Vermelho",
+            "↑ Amarelo  ← Vermelho  ↓ Azul  → Verde",
             "Acerte as notas quando chegarem aos botões!"
         ]
         

@@ -258,18 +258,18 @@ class MagicButtons:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
-                
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     return False
-                elif event.key == pygame.K_LEFT:
-                    self.activate_magic(0)
-                elif event.key == pygame.K_DOWN:
-                    self.activate_magic(1)
                 elif event.key == pygame.K_UP:
-                    self.activate_magic(2)
+                    self.activate_magic(0)  # Fogos (Amarelo)
+                elif event.key == pygame.K_LEFT:
+                    self.activate_magic(3)  # Corações (Vermelho)
+                elif event.key == pygame.K_DOWN:
+                    self.activate_magic(2)  # Flores (Azul)
                 elif event.key == pygame.K_RIGHT:
-                    self.activate_magic(3)
+                    self.activate_magic(1)  # Estrelas (Verde)
                 elif event.key == pygame.K_SPACE:
                     self.clear_all()
 
@@ -370,9 +370,13 @@ class MagicButtons:
         self.screen.blit(instruction, inst_rect)
 
         # Draw controls
-        controls = ["← Fogos", "↓ Estrelas", "↑ Flores", "→ Corações"]
-        for i, control in enumerate(controls):
-            color = [YELLOW, GREEN, BLUE, RED][i]
+        controls = [
+            ("↑ Fogos", YELLOW),
+            ("← Corações", RED),
+            ("↓ Flores", BLUE),
+            ("→ Estrelas", GREEN)
+        ]
+        for i, (control, color) in enumerate(controls):
             text = self.small_font.render(control, True, color)
             self.screen.blit(text, (20, 20 + i * 30))
 

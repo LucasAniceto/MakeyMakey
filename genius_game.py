@@ -52,10 +52,10 @@ class GeniusGame:
         self.completion_time = 0  # Tempo quando sequência foi completada
         
         self.sectors = {
-            'red': {'start_angle': 0, 'end_angle': 90},
-            'yellow': {'start_angle': 90, 'end_angle': 180},
-            'green': {'start_angle': 180, 'end_angle': 270},
-            'blue': {'start_angle': 270, 'end_angle': 360}
+            'yellow': {'start_angle': 45, 'end_angle': 135},     # Cima (↑)
+            'red': {'start_angle': 135, 'end_angle': 225},       # Esquerda (←)
+            'blue': {'start_angle': 225, 'end_angle': 315},      # Baixo (↓)
+            'green': {'start_angle': 315, 'end_angle': 45}       # Direita (→)
         }
         
         self.colors = {
@@ -140,18 +140,26 @@ class GeniusGame:
     def get_clicked_sector(self, pos):
         x, y = pos
         cx, cy = CIRCLE_CENTER
-        
+
         distance = math.sqrt((x - cx) ** 2 + (y - cy) ** 2)
         if distance < INNER_RADIUS or distance > CIRCLE_RADIUS:
             return None
-            
+
         angle = math.degrees(math.atan2(y - cy, x - cx))
         if angle < 0:
             angle += 360
-            
+
         for sector_name, sector_data in self.sectors.items():
-            if sector_data['start_angle'] <= angle < sector_data['end_angle']:
-                return sector_name
+            start = sector_data['start_angle']
+            end = sector_data['end_angle']
+
+            if start > end:
+                # Ângulo passa pelo 0 (ex: 270 a 90)
+                if angle >= start or angle < end:
+                    return sector_name
+            else:
+                if start <= angle < end:
+                    return sector_name
         return None
     
     def handle_keyboard_input(self, color):
@@ -176,28 +184,47 @@ class GeniusGame:
             self.completion_time = pygame.time.get_ticks()
                 
     def draw_sector(self, sector_name, is_active):
-        start_angle = math.radians(self.sectors[sector_name]['start_angle'])
-        end_angle = math.radians(self.sectors[sector_name]['end_angle'])
-        
+        start_deg = self.sectors[sector_name]['start_angle']
+        end_deg = self.sectors[sector_name]['end_angle']
+
         color = self.colors[sector_name][0] if is_active else self.colors[sector_name][1]
-        
+
         points = [CIRCLE_CENTER]
-        for angle in [start_angle + i * (end_angle - start_angle) / 50 for i in range(51)]:
-            x = CIRCLE_CENTER[0] + CIRCLE_RADIUS * math.cos(angle)
-            y = CIRCLE_CENTER[1] + CIRCLE_RADIUS * math.sin(angle)
+
+        # Gerar ângulos de forma inteligente
+        if start_deg < end_deg:
+            # Caminho normal (ex: 45 a 135)
+            angles = list(range(start_deg, end_deg + 1, 3))
+        else:
+            # Passa pelo 0 (ex: 315 a 45)
+            angles = list(range(start_deg, 360, 3)) + list(range(0, end_deg + 1, 3))
+
+        for angle_deg in angles:
+            angle_rad = math.radians(angle_deg)
+            x = CIRCLE_CENTER[0] + CIRCLE_RADIUS * math.cos(angle_rad)
+            y = CIRCLE_CENTER[1] + CIRCLE_RADIUS * math.sin(angle_rad)
             points.append((x, y))
+
         points.append(CIRCLE_CENTER)
-        
+
         pygame.draw.polygon(self.screen, color, points)
         pygame.draw.polygon(self.screen, WHITE, points, 3)
-        
+
         inner_points = [CIRCLE_CENTER]
-        for angle in [start_angle + i * (end_angle - start_angle) / 20 for i in range(21)]:
-            x = CIRCLE_CENTER[0] + INNER_RADIUS * math.cos(angle)
-            y = CIRCLE_CENTER[1] + INNER_RADIUS * math.sin(angle)
+
+        if start_deg < end_deg:
+            angles = list(range(start_deg, end_deg + 1, 9))
+        else:
+            angles = list(range(start_deg, 360, 9)) + list(range(0, end_deg + 1, 9))
+
+        for angle_deg in angles:
+            angle_rad = math.radians(angle_deg)
+            x = CIRCLE_CENTER[0] + INNER_RADIUS * math.cos(angle_rad)
+            y = CIRCLE_CENTER[1] + INNER_RADIUS * math.sin(angle_rad)
             inner_points.append((x, y))
+
         inner_points.append(CIRCLE_CENTER)
-        
+
         pygame.draw.polygon(self.screen, BLACK, inner_points)
 
     def draw(self):
@@ -234,16 +261,16 @@ class GeniusGame:
             left_margin = 50
             right_margin = WINDOW_WIDTH - 250
 
-            control_up = self.small_font.render("CIMA = Azul", True, BLUE)
+            control_up = self.small_font.render("CIMA = Amarelo", True, YELLOW)
             self.screen.blit(control_up, (left_margin, text_start_y + 130))
 
-            control_left = self.small_font.render("ESQUERDA = Verde", True, GREEN)
+            control_left = self.small_font.render("ESQUERDA = Vermelho", True, RED)
             self.screen.blit(control_left, (left_margin, text_start_y + 170))
 
-            control_down = self.small_font.render("BAIXO = Amarelo", True, YELLOW)
+            control_down = self.small_font.render("BAIXO = Azul", True, BLUE)
             self.screen.blit(control_down, (right_margin, text_start_y + 130))
 
-            control_right = self.small_font.render("DIREITA = Vermelho", True, RED)
+            control_right = self.small_font.render("DIREITA = Verde", True, GREEN)
             self.screen.blit(control_right, (right_margin, text_start_y + 170))
 
             exit_text = self.small_font.render("Pressione ESC para sair", True, WHITE)
@@ -280,13 +307,13 @@ class GeniusGame:
                         if self.game_state in ["esperando", "fim_jogo"]:
                             self.start_new_game()
                     elif event.key == pygame.K_UP:
-                        self.handle_keyboard_input('blue')
-                    elif event.key == pygame.K_LEFT:
-                        self.handle_keyboard_input('green')
-                    elif event.key == pygame.K_DOWN:
                         self.handle_keyboard_input('yellow')
-                    elif event.key == pygame.K_RIGHT:
+                    elif event.key == pygame.K_LEFT:
                         self.handle_keyboard_input('red')
+                    elif event.key == pygame.K_DOWN:
+                        self.handle_keyboard_input('blue')
+                    elif event.key == pygame.K_RIGHT:
+                        self.handle_keyboard_input('green')
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     # Permitir clicar nos setores com o mouse (toca som também)
                     pos = pygame.mouse.get_pos()

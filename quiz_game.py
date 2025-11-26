@@ -32,10 +32,10 @@ class QuizGame:
         self.font_small = pygame.font.Font(None, 24)
 
         # Perguntas do quiz com a estrutura correta
-        # Azul (CIMA) = Dica
-        # Amarelo (ESQUERDA) = Cuidado, problema médio
-        # Vermelho (DIREITA) = NÃO, crítico
-        # Verde (BAIXO) = OK, pode compartilhar
+        # Amarelo (CIMA) = Cuidado, problema médio
+        # Vermelho (ESQUERDA) = NÃO, crítico
+        # Azul (BAIXO) = Dica
+        # Verde (DIREITA) = OK, pode compartilhar
         self.questions = [
             {
                 "question": "Compartilhar seu NOME é seguro?",
@@ -167,19 +167,19 @@ class QuizGame:
                     return False
 
                 if not self.game_over:
-                    # Seta CIMA = Azul (Dica)
+                    # Seta CIMA = Amarelo (resposta)
                     if event.key == pygame.K_UP:
-                        self.show_tip = not self.show_tip
-                    # Seta ESQUERDA = Amarelo (resposta)
-                    elif event.key == pygame.K_LEFT:
                         if not self.answered:
                             self.submit_answer("yellow")
-                    # Seta DIREITA = Vermelho (resposta)
-                    elif event.key == pygame.K_RIGHT:
+                    # Seta ESQUERDA = Vermelho (resposta)
+                    elif event.key == pygame.K_LEFT:
                         if not self.answered:
                             self.submit_answer("red")
-                    # Seta BAIXO = Verde (resposta)
+                    # Seta BAIXO = Azul (Dica)
                     elif event.key == pygame.K_DOWN:
+                        self.show_tip = not self.show_tip
+                    # Seta DIREITA = Verde (resposta OK)
+                    elif event.key == pygame.K_RIGHT:
                         if not self.answered:
                             self.submit_answer("green")
                 else:
@@ -201,26 +201,26 @@ class QuizGame:
 
         button_size = 100
 
-        # Botão CIMA (Azul - Dica)
-        blue_rect = pygame.Rect(center_x - button_size // 2, center_y - 150, button_size, button_size)
-        if blue_rect.collidepoint(mouse_x, mouse_y):
-            self.show_tip = not self.show_tip
-            return
-
-        # Botão ESQUERDA (Amarelo)
-        yellow_rect = pygame.Rect(center_x - 150, center_y, button_size, button_size)
+        # Botão CIMA (Amarelo)
+        yellow_rect = pygame.Rect(center_x - button_size // 2, center_y - 150, button_size, button_size)
         if yellow_rect.collidepoint(mouse_x, mouse_y):
             self.submit_answer("yellow")
             return
 
-        # Botão DIREITA (Vermelho)
-        red_rect = pygame.Rect(center_x + 50, center_y, button_size, button_size)
+        # Botão ESQUERDA (Vermelho)
+        red_rect = pygame.Rect(center_x - 150, center_y, button_size, button_size)
         if red_rect.collidepoint(mouse_x, mouse_y):
             self.submit_answer("red")
             return
 
-        # Botão BAIXO (Verde)
-        green_rect = pygame.Rect(center_x - button_size // 2, center_y + 150, button_size, button_size)
+        # Botão BAIXO (Azul - Dica)
+        blue_rect = pygame.Rect(center_x - button_size // 2, center_y + 150, button_size, button_size)
+        if blue_rect.collidepoint(mouse_x, mouse_y):
+            self.show_tip = not self.show_tip
+            return
+
+        # Botão DIREITA (Verde)
+        green_rect = pygame.Rect(center_x + 50, center_y, button_size, button_size)
         if green_rect.collidepoint(mouse_x, mouse_y):
             self.submit_answer("green")
             return
@@ -345,25 +345,25 @@ class QuizGame:
         button_size = 100
         spacing = 30
 
-        # Posições dos botões em formato de CRUZ (+ com Azul no topo)
+        # Posições dos botões em formato de CRUZ (+)
         buttons = {
-            "blue": {
-                "pos": (center_x - button_size // 2, center_y - 150),
-                "color": BLUE,
-                "label": "DICA"
-            },
             "yellow": {
-                "pos": (center_x - 150, center_y),
+                "pos": (center_x - button_size // 2, center_y - 150),
                 "color": YELLOW,
                 "label": "TALVEZ"
             },
             "red": {
-                "pos": (center_x + 50, center_y),
+                "pos": (center_x - 150, center_y),
                 "color": RED,
                 "label": "NÃO"
             },
-            "green": {
+            "blue": {
                 "pos": (center_x - button_size // 2, center_y + 150),
+                "color": BLUE,
+                "label": "DICA"
+            },
+            "green": {
+                "pos": (center_x + 50, center_y),
                 "color": GREEN,
                 "label": "OK"
             }
@@ -395,21 +395,21 @@ class QuizGame:
 
             # Setas de instrução acima/abaixo/lado do botão
             arrow_font = pygame.font.Font(None, 24)
-            if key == "blue":
+            if key == "yellow":
                 arrow = arrow_font.render("↑", True, WHITE)
                 arrow_rect = arrow.get_rect(center=(button_rect.centerx, button_rect.top - 20))
                 self.screen.blit(arrow, arrow_rect)
-            elif key == "yellow":
+            elif key == "red":
                 arrow = arrow_font.render("←", True, WHITE)
                 arrow_rect = arrow.get_rect(center=(button_rect.left - 20, button_rect.centery))
                 self.screen.blit(arrow, arrow_rect)
-            elif key == "red":
-                arrow = arrow_font.render("→", True, WHITE)
-                arrow_rect = arrow.get_rect(center=(button_rect.right + 20, button_rect.centery))
-                self.screen.blit(arrow, arrow_rect)
-            elif key == "green":
+            elif key == "blue":
                 arrow = arrow_font.render("↓", True, WHITE)
                 arrow_rect = arrow.get_rect(center=(button_rect.centerx, button_rect.bottom + 20))
+                self.screen.blit(arrow, arrow_rect)
+            elif key == "green":
+                arrow = arrow_font.render("→", True, WHITE)
+                arrow_rect = arrow.get_rect(center=(button_rect.right + 20, button_rect.centery))
                 self.screen.blit(arrow, arrow_rect)
 
         # Feedback

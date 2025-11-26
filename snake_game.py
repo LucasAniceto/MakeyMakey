@@ -88,16 +88,17 @@ class SnakeGame:
             self.snake.pop()
     
     def draw_control_guide(self):
+        # Control scheme: ↑ Amarelo (UP), ← Vermelho (LEFT), ↓ Azul (DOWN), → Verde (RIGHT)
         controls = [
-            ("Esquerda", YELLOW, 50, 50),
-            ("Baixo", GREEN, 50, 100), 
-            ("Cima", BLUE, 50, 150),
-            ("Direita", RED, 50, 200)
+            ("↑ Amarelo", YELLOW, 50, 50),
+            ("← Vermelho", RED, 50, 100),
+            ("↓ Azul", BLUE, 50, 150),
+            ("→ Verde", GREEN, 50, 200)
         ]
-        
-        for arrow, color, x, y in controls:
+
+        for text_label, color, x, y in controls:
             pygame.draw.circle(self.screen, color, (x, y), 15)
-            text = self.small_font.render(arrow, True, BLACK)
+            text = self.small_font.render(text_label, True, BLACK)
             text_rect = text.get_rect(center=(x, y))
             self.screen.blit(text, text_rect)
     

@@ -194,11 +194,12 @@ class CarDodgeGame:
             y += line_gap
     
     def draw_controls(self):
+        # Control scheme (standardized): ↑ Amarelo, ← Vermelho, ↓ Azul, → Verde
         controls = [
-            ("← Esquerda", YELLOW, 20, 20),
-            ("→ Direita", YELLOW, 20, 50),
-            ("↑ Frente", GREEN, 20, 80),
-            ("↓ Trás", GREEN, 20, 110)
+            ("← Vermelho - Esquerda", RED, 20, 20),
+            ("→ Verde - Direita", GREEN, 20, 50),
+            ("↑ Amarelo - Frente", YELLOW, 20, 80),
+            ("↓ Azul - Trás", BLUE, 20, 110)
         ]
         
         for text, color, x, y in controls:
