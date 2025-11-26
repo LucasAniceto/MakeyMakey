@@ -4,8 +4,10 @@ import random
 
 pygame.init()
 
-WINDOW_WIDTH = 800
-WINDOW_HEIGHT = 600
+# Configurar para tela cheia (modo janela)
+info = pygame.display.Info()
+WINDOW_WIDTH = info.current_w
+WINDOW_HEIGHT = info.current_h
 FPS = 5
 
 GRID_SIZE = 20
@@ -22,7 +24,7 @@ DARK_GREEN = (0, 150, 0)
 
 class SnakeGame:
     def __init__(self):
-        self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+        self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.FULLSCREEN)
         pygame.display.set_caption("Jogo da Cobrinha - 4 Cores")
         self.clock = pygame.time.Clock()
         
@@ -45,9 +47,11 @@ class SnakeGame:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
-                
+
             if event.type == pygame.KEYDOWN:
-                if self.game_over:
+                if event.key == pygame.K_ESCAPE:
+                    return False
+                elif self.game_over:
                     if event.key == pygame.K_SPACE:
                         self.reset_game()
                 else:
@@ -59,7 +63,7 @@ class SnakeGame:
                         self.direction = (0, -1)
                     elif event.key == pygame.K_DOWN and self.direction != (0, -1):
                         self.direction = (0, 1)
-        
+
         return True
     
     def update(self):

@@ -4,8 +4,10 @@ import random
 
 pygame.init()
 
-WINDOW_WIDTH = 600
-WINDOW_HEIGHT = 400
+# Configurar para tela cheia (modo janela)
+info = pygame.display.Info()
+WINDOW_WIDTH = info.current_w
+WINDOW_HEIGHT = info.current_h
 FPS = 60
 
 YELLOW = (255, 255, 0)
@@ -17,15 +19,15 @@ BLACK = (0, 0, 0)
 GRAY = (128, 128, 128)
 DARK_GRAY = (64, 64, 64)
 
-CAR_WIDTH = 40
-CAR_HEIGHT = 60
+CAR_WIDTH = int(WINDOW_WIDTH * 0.07)
+CAR_HEIGHT = int(WINDOW_HEIGHT * 0.15)
 CAR_SPEED = 300
 
-OBSTACLE_WIDTH = 40
-OBSTACLE_HEIGHT = 60
+OBSTACLE_WIDTH = int(WINDOW_WIDTH * 0.07)
+OBSTACLE_HEIGHT = int(WINDOW_HEIGHT * 0.15)
 OBSTACLE_SPEED = 200
 
-ROAD_WIDTH = 400
+ROAD_WIDTH = int(WINDOW_WIDTH * 0.67)
 ROAD_X = (WINDOW_WIDTH - ROAD_WIDTH) // 2
 
 class Car:
@@ -98,7 +100,7 @@ class Obstacle:
 
 class CarDodgeGame:
     def __init__(self):
-        self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+        self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.FULLSCREEN)
         pygame.display.set_caption("Desviar de Carros - Arcade Clássico")
         self.clock = pygame.time.Clock()
         
@@ -120,11 +122,14 @@ class CarDodgeGame:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
-            
-            if event.type == pygame.KEYDOWN and self.game_over:
-                if event.key == pygame.K_SPACE:
-                    self.reset_game()
-                    
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return False
+                elif self.game_over:
+                    if event.key == pygame.K_SPACE:
+                        self.reset_game()
+
         return True
     
     def update(self, dt):

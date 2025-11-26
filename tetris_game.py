@@ -4,13 +4,15 @@ import random
 
 pygame.init()
 
-WINDOW_WIDTH = 600
-WINDOW_HEIGHT = 700
+# Configurar para tela cheia (modo janela)
+info = pygame.display.Info()
+WINDOW_WIDTH = info.current_w
+WINDOW_HEIGHT = info.current_h
 FPS = 60
 
 GRID_WIDTH = 10
 GRID_HEIGHT = 20
-BLOCK_SIZE = 30
+BLOCK_SIZE = int(min(WINDOW_WIDTH, WINDOW_HEIGHT) / 25)  # Responsivo
 
 YELLOW = (255, 255, 0)
 GREEN = (0, 255, 0)
@@ -20,8 +22,8 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY = (128, 128, 128)
 
-GAME_AREA_X = 50
-GAME_AREA_Y = 50
+GAME_AREA_X = int(WINDOW_WIDTH * 0.05)
+GAME_AREA_Y = int(WINDOW_HEIGHT * 0.05)
 
 class TetrisPiece:
     def __init__(self, shape_type, color):
@@ -100,7 +102,7 @@ class TetrisPiece:
 
 class TetrisGame:
     def __init__(self):
-        self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+        self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.FULLSCREEN)
         pygame.display.set_caption("Tétris Simples")
         self.clock = pygame.time.Clock()
         
@@ -185,28 +187,30 @@ class TetrisGame:
             if event.type == pygame.QUIT:
                 return False
             
-            if event.type == pygame.KEYDOWN and not self.game_over:
-                if event.key == pygame.K_LEFT:
-                    if self.is_valid_position(self.current_piece, dx=-1):
-                        self.current_piece.x -= 1
-                
-                elif event.key == pygame.K_RIGHT:
-                    if self.is_valid_position(self.current_piece, dx=1):
-                        self.current_piece.x += 1
-                
-                elif event.key == pygame.K_DOWN:
-                    if self.is_valid_position(self.current_piece, dy=1):
-                        self.current_piece.y += 1
-                        self.score += 1
-                
-                elif event.key == pygame.K_UP:
-                    new_rotation = (self.current_piece.rotation + 1) % len(self.current_piece.shapes[self.current_piece.shape_type])
-                    if self.is_valid_position(self.current_piece, rotation=new_rotation):
-                        self.current_piece.rotate()
-            
-            elif event.type == pygame.KEYDOWN and self.game_over:
-                if event.key == pygame.K_SPACE:
-                    self.reset_game()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return False
+                elif self.game_over:
+                    if event.key == pygame.K_SPACE:
+                        self.reset_game()
+                else:
+                    if event.key == pygame.K_LEFT:
+                        if self.is_valid_position(self.current_piece, dx=-1):
+                            self.current_piece.x -= 1
+
+                    elif event.key == pygame.K_RIGHT:
+                        if self.is_valid_position(self.current_piece, dx=1):
+                            self.current_piece.x += 1
+
+                    elif event.key == pygame.K_DOWN:
+                        if self.is_valid_position(self.current_piece, dy=1):
+                            self.current_piece.y += 1
+                            self.score += 1
+
+                    elif event.key == pygame.K_UP:
+                        new_rotation = (self.current_piece.rotation + 1) % len(self.current_piece.shapes[self.current_piece.shape_type])
+                        if self.is_valid_position(self.current_piece, rotation=new_rotation):
+                            self.current_piece.rotate()
         
         return True
     

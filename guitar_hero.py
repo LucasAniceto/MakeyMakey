@@ -4,8 +4,10 @@ import random
 
 pygame.init()
 
-WINDOW_WIDTH = 1280
-WINDOW_HEIGHT = 720
+# Configurar para tela cheia (modo janela)
+info = pygame.display.Info()
+WINDOW_WIDTH = info.current_w
+WINDOW_HEIGHT = info.current_h
 FPS = 60
 
 YELLOW = (255, 255, 0)
@@ -16,12 +18,12 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY = (128, 128, 128)
 
-BUTTON_WIDTH = 120
-BUTTON_HEIGHT = 80
-BUTTON_Y = 450
+BUTTON_WIDTH = int(WINDOW_WIDTH * 0.09)
+BUTTON_HEIGHT = int(WINDOW_HEIGHT * 0.11)
+BUTTON_Y = int(WINDOW_HEIGHT * 0.62)
 
-NOTE_WIDTH = 100
-NOTE_HEIGHT = 40
+NOTE_WIDTH = int(WINDOW_WIDTH * 0.08)
+NOTE_HEIGHT = int(WINDOW_HEIGHT * 0.05)
 NOTE_SPEED = 300
 HIT_ZONE_TOLERANCE = 30
 
@@ -66,7 +68,7 @@ class Note:
 
 class GuitarHero:
     def __init__(self):
-        self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+        self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.FULLSCREEN)
         pygame.display.set_caption("Herói da Guitarra - Protótipo")
         self.clock = pygame.time.Clock()
         
@@ -93,18 +95,20 @@ class GuitarHero:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
-            
+
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return False
                 for i, button in enumerate(self.buttons):
                     if event.key == button.key:
                         button.pressed = True
                         self.check_hit(i)
-                        
+
             if event.type == pygame.KEYUP:
                 for button in self.buttons:
                     if event.key == button.key:
                         button.pressed = False
-                        
+
         return True
     
     def spawn_note(self):

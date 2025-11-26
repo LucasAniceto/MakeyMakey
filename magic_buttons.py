@@ -5,8 +5,10 @@ import math
 
 pygame.init()
 
-WINDOW_WIDTH = 800
-WINDOW_HEIGHT = 600
+# Configurar para tela cheia (modo janela)
+info = pygame.display.Info()
+WINDOW_WIDTH = info.current_w
+WINDOW_HEIGHT = info.current_h
 FPS = 60
 
 YELLOW = (255, 255, 0)
@@ -231,7 +233,7 @@ class MagicButton:
 
 class MagicButtons:
     def __init__(self):
-        self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+        self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.FULLSCREEN)
         pygame.display.set_caption("Botões Mágicos")
         self.clock = pygame.time.Clock()
         
@@ -258,7 +260,9 @@ class MagicButtons:
                 return False
                 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_ESCAPE:
+                    return False
+                elif event.key == pygame.K_LEFT:
                     self.activate_magic(0)
                 elif event.key == pygame.K_DOWN:
                     self.activate_magic(1)
@@ -268,7 +272,7 @@ class MagicButtons:
                     self.activate_magic(3)
                 elif event.key == pygame.K_SPACE:
                     self.clear_all()
-        
+
         return True
     
     def activate_magic(self, button_index):

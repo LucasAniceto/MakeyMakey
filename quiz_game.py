@@ -3,8 +3,10 @@ import sys
 
 pygame.init()
 
-WINDOW_WIDTH = 1000
-WINDOW_HEIGHT = 720
+# Configurar para tela cheia (modo janela)
+info = pygame.display.Info()
+WINDOW_WIDTH = info.current_w
+WINDOW_HEIGHT = info.current_h
 FPS = 60
 
 # Cores
@@ -20,7 +22,7 @@ DARK_GRAY = (50, 50, 50)
 
 class QuizGame:
     def __init__(self):
-        self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+        self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.FULLSCREEN)
         pygame.display.set_caption("Quiz de Privacidade e Proteção de Dados")
         self.clock = pygame.time.Clock()
 
