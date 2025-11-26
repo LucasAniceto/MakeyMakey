@@ -355,7 +355,7 @@ class QuizGame:
             },
             "orange": {
                 "pos": (center_x - 150, center_y),
-                "color": ORANGE,
+                "color": RED,
                 "label": "NÃO"
             },
             "yellow": {
