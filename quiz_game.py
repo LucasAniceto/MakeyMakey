@@ -38,74 +38,110 @@ class QuizGame:
             {
                 "question": "Compartilhar seu NOME é seguro?",
                 "answers": {
-                    "green": {"text": "Sim, é público", "correct": True},
-                    "yellow": {"text": "Cuidado", "correct": False},
-                    "red": {"text": "Não!", "correct": False}
+                    "green": {"text": "Sim, é público", "correct": True, "explanation": "Correto! Nome é informação pública."},
+                    "yellow": {"text": "Cuidado", "correct": False, "explanation": "Errado! Nome é informação pública e segura."},
+                    "red": {"text": "Não!", "correct": False, "explanation": "Errado! Nome é informação pública."}
                 },
                 "tip": "Nome é informação pública e não compromete segurança"
             },
             {
                 "question": "Compartilhar seu CPF é seguro?",
                 "answers": {
-                    "green": {"text": "Sim", "correct": False},
-                    "yellow": {"text": "Cuidado, risco", "correct": True},
-                    "red": {"text": "Não!", "correct": False}
+                    "green": {"text": "Sim", "correct": False, "explanation": "Errado! CPF é documento sensível e pode ser usado para fraudes."},
+                    "yellow": {"text": "Cuidado, risco", "correct": True, "explanation": "Correto! CPF exige cuidado pois pode ser usado para roubo de identidade."},
+                    "red": {"text": "Não!", "correct": False, "explanation": "Parcialmente certo, mas 'Cuidado' é mais apropriado que 'Nunca'."}
                 },
-                "tip": "CPF pode ser usado para fraudes, exige cuidado"
+                "tip": "CPF pode ser usado para fraudes e roubo de identidade"
             },
             {
                 "question": "Compartilhar sua SENHA é seguro?",
                 "answers": {
-                    "green": {"text": "Sim", "correct": False},
-                    "yellow": {"text": "Cuidado", "correct": False},
-                    "red": {"text": "NUNCA!", "correct": True}
+                    "green": {"text": "Sim", "correct": False, "explanation": "Errado! Senha deve ser confidencial."},
+                    "yellow": {"text": "Cuidado", "correct": False, "explanation": "Errado! Senhas NUNCA devem ser compartilhadas, nem com cuidado."},
+                    "red": {"text": "NUNCA!", "correct": True, "explanation": "Correto! Senhas são confidenciais e pessoais. Nunca compartilhe!"}
                 },
                 "tip": "Senhas são confidenciais e pessoais, NUNCA compartilhe!"
             },
             {
                 "question": "Compartilhar seu DIAGNÓSTICO DE SAÚDE é seguro?",
                 "answers": {
-                    "green": {"text": "Sim", "correct": False},
-                    "yellow": {"text": "Cuidado", "correct": False},
-                    "red": {"text": "Não!", "correct": True}
+                    "green": {"text": "Sim", "correct": False, "explanation": "Errado! Diagnóstico é informação muito sensível e privada."},
+                    "yellow": {"text": "Cuidado", "correct": False, "explanation": "Errado! Diagnósticos não devem ser compartilhados, mesmo com cuidado."},
+                    "red": {"text": "Não!", "correct": True, "explanation": "Correto! Dados de saúde são altamente sensíveis e privados."}
                 },
-                "tip": "Dados de saúde são altamente sensíveis e privados"
+                "tip": "Diagnósticos revelam informações muito pessoais sobre você"
             },
             {
                 "question": "Compartilhar seu NÚMERO DE CELULAR é seguro?",
                 "answers": {
-                    "green": {"text": "Sim", "correct": False},
-                    "yellow": {"text": "Cuidado", "correct": True},
-                    "red": {"text": "Não!", "correct": False}
+                    "green": {"text": "Sim", "correct": False, "explanation": "Errado! Celular pode ser usado para golpes e rastreamento."},
+                    "yellow": {"text": "Cuidado", "correct": True, "explanation": "Correto! Celular exige cuidado pois permite contato direto e fraudes."},
+                    "red": {"text": "Não!", "correct": False, "explanation": "Nem sempre. Às vezes é necessário compartilhar com confiança."}
                 },
-                "tip": "Número de celular pode ser usado para fraudes"
+                "tip": "Número de celular pode ser usado para fraudes e rastreamento"
             },
             {
                 "question": "Compartilhar sua DATA DE NASCIMENTO é seguro?",
                 "answers": {
-                    "green": {"text": "Sim", "correct": False},
-                    "yellow": {"text": "Cuidado", "correct": True},
-                    "red": {"text": "Não!", "correct": False}
+                    "green": {"text": "Sim", "correct": False, "explanation": "Errado! Data de nascimento é chave para roubo de identidade."},
+                    "yellow": {"text": "Cuidado", "correct": True, "explanation": "Correto! Data de nascimento é parte importante de sua identidade."},
+                    "red": {"text": "Não!", "correct": False, "explanation": "Às vezes é necessário compartilhar, então 'Cuidado' é mais apropriado."}
                 },
-                "tip": "Data de nascimento é parte importante da identidade"
+                "tip": "Data de nascimento + CPF = informação para roubo de identidade"
             },
             {
                 "question": "Compartilhar sua FOTO é seguro?",
                 "answers": {
-                    "green": {"text": "Sim", "correct": False},
-                    "yellow": {"text": "Cuidado", "correct": True},
-                    "red": {"text": "Não!", "correct": False}
+                    "green": {"text": "Sim", "correct": False, "explanation": "Errado! Fotos podem ser usadas para deepfakes e fraudes."},
+                    "yellow": {"text": "Cuidado", "correct": True, "explanation": "Correto! Fotos precisam de cuidado pois podem ser manipuladas."},
+                    "red": {"text": "Não!", "correct": False, "explanation": "Nem sempre. Fotos em redes sociais públicas são aceitáveis."}
                 },
-                "tip": "Fotos podem ser usadas de formas indevidas"
+                "tip": "Fotos podem ser usadas em deepfakes ou para fraudes"
             },
             {
                 "question": "Compartilhar sua RELIGIÃO/ORIENTAÇÃO POLÍTICA é seguro?",
                 "answers": {
-                    "green": {"text": "Sim", "correct": False},
-                    "yellow": {"text": "Cuidado", "correct": False},
-                    "red": {"text": "Não!", "correct": True}
+                    "green": {"text": "Sim", "correct": False, "explanation": "Errado! Isso pode gerar discriminação e assédio online."},
+                    "yellow": {"text": "Cuidado", "correct": False, "explanation": "Errado! Essas informações não devem ser compartilhadas."},
+                    "red": {"text": "Não!", "correct": True, "explanation": "Correto! Informações sensíveis que podem gerar discriminação."}
                 },
-                "tip": "Informações sensíveis que podem gerar discriminação"
+                "tip": "Intolerância existe. Proteja sua identidade política e religiosa"
+            },
+            {
+                "question": "Compartilhar seu ENDEREÇO RESIDENCIAL é seguro?",
+                "answers": {
+                    "green": {"text": "Sim", "correct": False, "explanation": "Errado! Endereço permite roubo, invasão e assédio."},
+                    "yellow": {"text": "Cuidado", "correct": True, "explanation": "Correto! Endereço exige cuidado. Só compartilhe com confiança."},
+                    "red": {"text": "Não!", "correct": False, "explanation": "Às vezes é necessário, então 'Cuidado' é mais apropriado."}
+                },
+                "tip": "Seu endereço permite roubo, invasão de privacidade e assédio"
+            },
+            {
+                "question": "Compartilhar seu EMAIL é seguro?",
+                "answers": {
+                    "green": {"text": "Sim", "correct": True, "explanation": "Correto! Email é informação pública geralmente segura."},
+                    "yellow": {"text": "Cuidado", "correct": False, "explanation": "Errado! Email é informação pública e necessária."},
+                    "red": {"text": "Não!", "correct": False, "explanation": "Errado! Email precisa ser compartilhado para se comunicar."}
+                },
+                "tip": "Email é necessário para comunicação e recuperação de conta"
+            },
+            {
+                "question": "Compartilhar seus CARTÕES DE CRÉDITO é seguro?",
+                "answers": {
+                    "green": {"text": "Sim", "correct": False, "explanation": "Errado! Dados de cartão permitem fraudes e roubo."},
+                    "yellow": {"text": "Cuidado", "correct": False, "explanation": "Errado! Cartão NUNCA deve ser compartilhado, nem com cuidado."},
+                    "red": {"text": "Não!", "correct": True, "explanation": "Correto! Dados de cartão nunca devem ser compartilhados."}
+                },
+                "tip": "Seu cartão é como dinheiro. Nunca compartilhe esses dados!"
+            },
+            {
+                "question": "Compartilhar seu NOME DE USUÁRIO é seguro?",
+                "answers": {
+                    "green": {"text": "Sim", "correct": True, "explanation": "Correto! Nome de usuário é informação pública."},
+                    "yellow": {"text": "Cuidado", "correct": False, "explanation": "Errado! Nome de usuário é informação pública."},
+                    "red": {"text": "Não!", "correct": False, "explanation": "Errado! Nome de usuário é necessário para comunicação."}
+                },
+                "tip": "Nome de usuário é informação pública em plataformas"
             }
         ]
 
@@ -116,6 +152,7 @@ class QuizGame:
         self.game_over = False
         self.feedback_timer = 0
         self.feedback_text = ""
+        self.feedback_explanation = ""
         self.is_correct = False
 
     def handle_events(self):
@@ -202,7 +239,9 @@ class QuizGame:
             self.feedback_text = "✗ ERRADO!"
             self.is_correct = False
 
-        self.feedback_timer = 180  # 3 segundos a 60 FPS
+        # Armazenar explicação da resposta
+        self.feedback_explanation = question["answers"][answer_key]["explanation"]
+        self.feedback_timer = 240  # 4 segundos a 60 FPS para ler a explicação
 
     def next_question(self):
         self.current_question += 1
@@ -213,6 +252,8 @@ class QuizGame:
             self.answered = False
             self.show_tip = False
             self.feedback_timer = 0
+            self.feedback_text = ""
+            self.feedback_explanation = ""
 
     def draw(self):
         self.screen.fill(DARK_GRAY)
@@ -302,27 +343,27 @@ class QuizGame:
         button_size = 100
         spacing = 20
 
-        # Posições dos botões
+        # Posições dos botões em formato D-Pad
         buttons = {
             "green": {
                 "pos": (center_x - button_size // 2, center_y - 150),
                 "color": GREEN,
-                "label": "↑\nVERDE\nDE BOA"
+                "label": "OK"
             },
             "yellow": {
                 "pos": (center_x - 250, center_y),
                 "color": YELLOW,
-                "label": "←\nAMRELO\nCUIDADO"
+                "label": "TALVEZ"
             },
             "red": {
                 "pos": (center_x + 150, center_y),
                 "color": RED,
-                "label": "→\nVERMELHO\nNÃO"
+                "label": "NÃO"
             },
             "blue": {
                 "pos": (center_x - button_size // 2, center_y + 150),
                 "color": BLUE,
-                "label": "↓\nAZUL\nDICA"
+                "label": "DICA"
             }
         }
 
@@ -345,26 +386,69 @@ class QuizGame:
                 pygame.draw.rect(self.screen, btn_data["color"], button_rect)
                 pygame.draw.rect(self.screen, WHITE, button_rect, 3)
 
-            # Texto do botão
+            # Texto do botão (maior e centrado)
             text = self.font_button.render(btn_data["label"], True, BLACK)
             text_rect = text.get_rect(center=button_rect.center)
             self.screen.blit(text, text_rect)
 
+            # Setas de instrução acima/abaixo/lado do botão
+            arrow_font = pygame.font.Font(None, 24)
+            if key == "green":
+                arrow = arrow_font.render("↑", True, WHITE)
+                arrow_rect = arrow.get_rect(center=(button_rect.centerx, button_rect.top - 20))
+                self.screen.blit(arrow, arrow_rect)
+            elif key == "yellow":
+                arrow = arrow_font.render("←", True, WHITE)
+                arrow_rect = arrow.get_rect(center=(button_rect.left - 20, button_rect.centery))
+                self.screen.blit(arrow, arrow_rect)
+            elif key == "red":
+                arrow = arrow_font.render("→", True, WHITE)
+                arrow_rect = arrow.get_rect(center=(button_rect.right + 20, button_rect.centery))
+                self.screen.blit(arrow, arrow_rect)
+            elif key == "blue":
+                arrow = arrow_font.render("↓", True, WHITE)
+                arrow_rect = arrow.get_rect(center=(button_rect.centerx, button_rect.bottom + 20))
+                self.screen.blit(arrow, arrow_rect)
+
         # Feedback
         if self.answered:
             if self.feedback_timer > 0:
+                # Fundo semi-transparente para feedback
+                feedback_bg = pygame.Rect(50, 250, WINDOW_WIDTH - 100, 150)
+                pygame.draw.rect(self.screen, BLACK, feedback_bg)
+                pygame.draw.rect(self.screen, WHITE, feedback_bg, 2)
+
+                # Texto de acerto/erro
                 feedback_color = GREEN if self.is_correct else RED
                 feedback_text = self.font_title.render(
                     self.feedback_text,
                     True,
                     feedback_color
                 )
-                feedback_rect = feedback_text.get_rect(center=(WINDOW_WIDTH // 2, 280))
+                feedback_rect = feedback_text.get_rect(center=(WINDOW_WIDTH // 2, 270))
                 self.screen.blit(feedback_text, feedback_rect)
+
+                # Explicação da resposta
+                explanation_text = self.font_small.render(
+                    self.feedback_explanation,
+                    True,
+                    WHITE
+                )
+                explanation_rect = explanation_text.get_rect(center=(WINDOW_WIDTH // 2, 330))
+                self.screen.blit(explanation_text, explanation_rect)
+
                 self.feedback_timer -= 1
             else:
                 # Avança para próxima pergunta
                 self.next_question()
+
+        # Instruções na parte inferior
+        inst_text = self.font_small.render(
+            "Aperte as SETAS DIRECIONAIS para responder",
+            True, LIGHT_GRAY
+        )
+        inst_rect = inst_text.get_rect(center=(WINDOW_WIDTH // 2, 650))
+        self.screen.blit(inst_text, inst_rect)
 
     def run(self):
         running = True
