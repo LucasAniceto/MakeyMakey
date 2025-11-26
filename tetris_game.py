@@ -203,14 +203,14 @@ class TetrisGame:
                             self.current_piece.x += 1
 
                     elif event.key == pygame.K_DOWN:
-                        if self.is_valid_position(self.current_piece, dy=1):
-                            self.current_piece.y += 1
-                            self.score += 1
-
-                    elif event.key == pygame.K_UP:
                         new_rotation = (self.current_piece.rotation + 1) % len(self.current_piece.shapes[self.current_piece.shape_type])
                         if self.is_valid_position(self.current_piece, rotation=new_rotation):
                             self.current_piece.rotate()
+
+                    elif event.key == pygame.K_UP:
+                        if self.is_valid_position(self.current_piece, dy=1):
+                            self.current_piece.y += 1
+                            self.score += 1
         
         return True
     

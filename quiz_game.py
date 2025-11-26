@@ -16,6 +16,7 @@ GREEN = (0, 200, 0)
 YELLOW = (255, 255, 0)
 RED = (255, 0, 0)
 BLUE = (0, 150, 255)
+ORANGE = (255, 165, 0)
 GRAY = (100, 100, 100)
 LIGHT_GRAY = (200, 200, 200)
 DARK_GRAY = (50, 50, 50)
@@ -32,17 +33,17 @@ class QuizGame:
         self.font_small = pygame.font.Font(None, 24)
 
         # Perguntas do quiz com a estrutura correta
-        # Amarelo (CIMA) = Cuidado, problema médio
-        # Vermelho (ESQUERDA) = NÃO, crítico
-        # Azul (BAIXO) = Dica
+        # Azul (CIMA) = Dica
         # Verde (DIREITA) = OK, pode compartilhar
+        # Laranja (ESQUERDA) = NÃO, crítico
+        # Amarelo (BAIXO) = Cuidado, problema médio
         self.questions = [
             {
                 "question": "Compartilhar seu NOME é seguro?",
                 "answers": {
                     "green": {"text": "Sim, é público", "correct": True, "explanation": "Correto! Nome é informação pública."},
                     "yellow": {"text": "Cuidado", "correct": False, "explanation": "Errado! Nome é informação pública e segura."},
-                    "red": {"text": "Não!", "correct": False, "explanation": "Errado! Nome é informação pública."}
+                    "orange": {"text": "Não!", "correct": False, "explanation": "Errado! Nome é informação pública."}
                 },
                 "tip": "Nome é informação pública e não compromete segurança"
             },
@@ -51,7 +52,7 @@ class QuizGame:
                 "answers": {
                     "green": {"text": "Sim", "correct": False, "explanation": "Errado! CPF é documento sensível e pode ser usado para fraudes."},
                     "yellow": {"text": "Cuidado, risco", "correct": True, "explanation": "Correto! CPF exige cuidado pois pode ser usado para roubo de identidade."},
-                    "red": {"text": "Não!", "correct": False, "explanation": "Parcialmente certo, mas 'Cuidado' é mais apropriado que 'Nunca'."}
+                    "orange": {"text": "Não!", "correct": False, "explanation": "Parcialmente certo, mas 'Cuidado' é mais apropriado que 'Nunca'."}
                 },
                 "tip": "CPF pode ser usado para fraudes e roubo de identidade"
             },
@@ -60,7 +61,7 @@ class QuizGame:
                 "answers": {
                     "green": {"text": "Sim", "correct": False, "explanation": "Errado! Senha deve ser confidencial."},
                     "yellow": {"text": "Cuidado", "correct": False, "explanation": "Errado! Senhas NUNCA devem ser compartilhadas, nem com cuidado."},
-                    "red": {"text": "NUNCA!", "correct": True, "explanation": "Correto! Senhas são confidenciais e pessoais. Nunca compartilhe!"}
+                    "orange": {"text": "NUNCA!", "correct": True, "explanation": "Correto! Senhas são confidenciais e pessoais. Nunca compartilhe!"}
                 },
                 "tip": "Senhas são confidenciais e pessoais, NUNCA compartilhe!"
             },
@@ -69,7 +70,7 @@ class QuizGame:
                 "answers": {
                     "green": {"text": "Sim", "correct": False, "explanation": "Errado! Diagnóstico é informação muito sensível e privada."},
                     "yellow": {"text": "Cuidado", "correct": False, "explanation": "Errado! Diagnósticos não devem ser compartilhados, mesmo com cuidado."},
-                    "red": {"text": "Não!", "correct": True, "explanation": "Correto! Dados de saúde são altamente sensíveis e privados."}
+                    "orange": {"text": "Não!", "correct": True, "explanation": "Correto! Dados de saúde são altamente sensíveis e privados."}
                 },
                 "tip": "Diagnósticos revelam informações muito pessoais sobre você"
             },
@@ -78,7 +79,7 @@ class QuizGame:
                 "answers": {
                     "green": {"text": "Sim", "correct": False, "explanation": "Errado! Celular pode ser usado para golpes e rastreamento."},
                     "yellow": {"text": "Cuidado", "correct": True, "explanation": "Correto! Celular exige cuidado pois permite contato direto e fraudes."},
-                    "red": {"text": "Não!", "correct": False, "explanation": "Nem sempre. Às vezes é necessário compartilhar com confiança."}
+                    "orange": {"text": "Não!", "correct": False, "explanation": "Nem sempre. Às vezes é necessário compartilhar com confiança."}
                 },
                 "tip": "Número de celular pode ser usado para fraudes e rastreamento"
             },
@@ -87,7 +88,7 @@ class QuizGame:
                 "answers": {
                     "green": {"text": "Sim", "correct": False, "explanation": "Errado! Data de nascimento é chave para roubo de identidade."},
                     "yellow": {"text": "Cuidado", "correct": True, "explanation": "Correto! Data de nascimento é parte importante de sua identidade."},
-                    "red": {"text": "Não!", "correct": False, "explanation": "Às vezes é necessário compartilhar, então 'Cuidado' é mais apropriado."}
+                    "orange": {"text": "Não!", "correct": False, "explanation": "Às vezes é necessário compartilhar, então 'Cuidado' é mais apropriado."}
                 },
                 "tip": "Data de nascimento + CPF = informação para roubo de identidade"
             },
@@ -96,7 +97,7 @@ class QuizGame:
                 "answers": {
                     "green": {"text": "Sim", "correct": False, "explanation": "Errado! Fotos podem ser usadas para deepfakes e fraudes."},
                     "yellow": {"text": "Cuidado", "correct": True, "explanation": "Correto! Fotos precisam de cuidado pois podem ser manipuladas."},
-                    "red": {"text": "Não!", "correct": False, "explanation": "Nem sempre. Fotos em redes sociais públicas são aceitáveis."}
+                    "orange": {"text": "Não!", "correct": False, "explanation": "Nem sempre. Fotos em redes sociais públicas são aceitáveis."}
                 },
                 "tip": "Fotos podem ser usadas em deepfakes ou para fraudes"
             },
@@ -105,7 +106,7 @@ class QuizGame:
                 "answers": {
                     "green": {"text": "Sim", "correct": False, "explanation": "Errado! Isso pode gerar discriminação e assédio online."},
                     "yellow": {"text": "Cuidado", "correct": False, "explanation": "Errado! Essas informações não devem ser compartilhadas."},
-                    "red": {"text": "Não!", "correct": True, "explanation": "Correto! Informações sensíveis que podem gerar discriminação."}
+                    "orange": {"text": "Não!", "correct": True, "explanation": "Correto! Informações sensíveis que podem gerar discriminação."}
                 },
                 "tip": "Intolerância existe. Proteja sua identidade política e religiosa"
             },
@@ -114,7 +115,7 @@ class QuizGame:
                 "answers": {
                     "green": {"text": "Sim", "correct": False, "explanation": "Errado! Endereço permite roubo, invasão e assédio."},
                     "yellow": {"text": "Cuidado", "correct": True, "explanation": "Correto! Endereço exige cuidado. Só compartilhe com confiança."},
-                    "red": {"text": "Não!", "correct": False, "explanation": "Às vezes é necessário, então 'Cuidado' é mais apropriado."}
+                    "orange": {"text": "Não!", "correct": False, "explanation": "Às vezes é necessário, então 'Cuidado' é mais apropriado."}
                 },
                 "tip": "Seu endereço permite roubo, invasão de privacidade e assédio"
             },
@@ -123,7 +124,7 @@ class QuizGame:
                 "answers": {
                     "green": {"text": "Sim", "correct": True, "explanation": "Correto! Email é informação pública geralmente segura."},
                     "yellow": {"text": "Cuidado", "correct": False, "explanation": "Errado! Email é informação pública e necessária."},
-                    "red": {"text": "Não!", "correct": False, "explanation": "Errado! Email precisa ser compartilhado para se comunicar."}
+                    "orange": {"text": "Não!", "correct": False, "explanation": "Errado! Email precisa ser compartilhado para se comunicar."}
                 },
                 "tip": "Email é necessário para comunicação e recuperação de conta"
             },
@@ -132,7 +133,7 @@ class QuizGame:
                 "answers": {
                     "green": {"text": "Sim", "correct": False, "explanation": "Errado! Dados de cartão permitem fraudes e roubo."},
                     "yellow": {"text": "Cuidado", "correct": False, "explanation": "Errado! Cartão NUNCA deve ser compartilhado, nem com cuidado."},
-                    "red": {"text": "Não!", "correct": True, "explanation": "Correto! Dados de cartão nunca devem ser compartilhados."}
+                    "orange": {"text": "Não!", "correct": True, "explanation": "Correto! Dados de cartão nunca devem ser compartilhados."}
                 },
                 "tip": "Seu cartão é como dinheiro. Nunca compartilhe esses dados!"
             },
@@ -141,7 +142,7 @@ class QuizGame:
                 "answers": {
                     "green": {"text": "Sim", "correct": True, "explanation": "Correto! Nome de usuário é informação pública."},
                     "yellow": {"text": "Cuidado", "correct": False, "explanation": "Errado! Nome de usuário é informação pública."},
-                    "red": {"text": "Não!", "correct": False, "explanation": "Errado! Nome de usuário é necessário para comunicação."}
+                    "orange": {"text": "Não!", "correct": False, "explanation": "Errado! Nome de usuário é necessário para comunicação."}
                 },
                 "tip": "Nome de usuário é informação pública em plataformas"
             }
@@ -167,17 +168,17 @@ class QuizGame:
                     return False
 
                 if not self.game_over:
-                    # Seta CIMA = Amarelo (resposta)
+                    # Seta CIMA = Azul (Dica)
                     if event.key == pygame.K_UP:
-                        if not self.answered:
-                            self.submit_answer("yellow")
-                    # Seta ESQUERDA = Vermelho (resposta)
+                        self.show_tip = not self.show_tip
+                    # Seta ESQUERDA = Laranja (resposta)
                     elif event.key == pygame.K_LEFT:
                         if not self.answered:
-                            self.submit_answer("red")
-                    # Seta BAIXO = Azul (Dica)
+                            self.submit_answer("orange")
+                    # Seta BAIXO = Amarelo (resposta)
                     elif event.key == pygame.K_DOWN:
-                        self.show_tip = not self.show_tip
+                        if not self.answered:
+                            self.submit_answer("yellow")
                     # Seta DIREITA = Verde (resposta OK)
                     elif event.key == pygame.K_RIGHT:
                         if not self.answered:
@@ -201,22 +202,22 @@ class QuizGame:
 
         button_size = 100
 
-        # Botão CIMA (Amarelo)
-        yellow_rect = pygame.Rect(center_x - button_size // 2, center_y - 150, button_size, button_size)
-        if yellow_rect.collidepoint(mouse_x, mouse_y):
-            self.submit_answer("yellow")
-            return
-
-        # Botão ESQUERDA (Vermelho)
-        red_rect = pygame.Rect(center_x - 150, center_y, button_size, button_size)
-        if red_rect.collidepoint(mouse_x, mouse_y):
-            self.submit_answer("red")
-            return
-
-        # Botão BAIXO (Azul - Dica)
-        blue_rect = pygame.Rect(center_x - button_size // 2, center_y + 150, button_size, button_size)
+        # Botão CIMA (Azul - Dica)
+        blue_rect = pygame.Rect(center_x - button_size // 2, center_y - 150, button_size, button_size)
         if blue_rect.collidepoint(mouse_x, mouse_y):
             self.show_tip = not self.show_tip
+            return
+
+        # Botão ESQUERDA (Laranja)
+        orange_rect = pygame.Rect(center_x - 150, center_y, button_size, button_size)
+        if orange_rect.collidepoint(mouse_x, mouse_y):
+            self.submit_answer("orange")
+            return
+
+        # Botão BAIXO (Amarelo)
+        yellow_rect = pygame.Rect(center_x - button_size // 2, center_y + 150, button_size, button_size)
+        if yellow_rect.collidepoint(mouse_x, mouse_y):
+            self.submit_answer("yellow")
             return
 
         # Botão DIREITA (Verde)
@@ -347,20 +348,20 @@ class QuizGame:
 
         # Posições dos botões em formato de CRUZ (+)
         buttons = {
-            "yellow": {
-                "pos": (center_x - button_size // 2, center_y - 150),
-                "color": YELLOW,
-                "label": "TALVEZ"
-            },
-            "red": {
-                "pos": (center_x - 150, center_y),
-                "color": RED,
-                "label": "NÃO"
-            },
             "blue": {
-                "pos": (center_x - button_size // 2, center_y + 150),
+                "pos": (center_x - button_size // 2, center_y - 150),
                 "color": BLUE,
                 "label": "DICA"
+            },
+            "orange": {
+                "pos": (center_x - 150, center_y),
+                "color": ORANGE,
+                "label": "NÃO"
+            },
+            "yellow": {
+                "pos": (center_x - button_size // 2, center_y + 150),
+                "color": YELLOW,
+                "label": "TALVEZ"
             },
             "green": {
                 "pos": (center_x + 50, center_y),
@@ -374,7 +375,7 @@ class QuizGame:
             button_rect = pygame.Rect(btn_data["pos"][0], btn_data["pos"][1], button_size, button_size)
 
             # Cor e estilo
-            if self.answered and key in ["green", "yellow", "red"]:
+            if self.answered and key in ["green", "yellow", "orange"]:
                 if question["answers"][key]["correct"]:
                     # Resposta correta - borda grossa
                     pygame.draw.rect(self.screen, btn_data["color"], button_rect)
@@ -395,15 +396,15 @@ class QuizGame:
 
             # Setas de instrução acima/abaixo/lado do botão
             arrow_font = pygame.font.Font(None, 24)
-            if key == "yellow":
+            if key == "blue":
                 arrow = arrow_font.render("↑", True, WHITE)
                 arrow_rect = arrow.get_rect(center=(button_rect.centerx, button_rect.top - 20))
                 self.screen.blit(arrow, arrow_rect)
-            elif key == "red":
+            elif key == "orange":
                 arrow = arrow_font.render("←", True, WHITE)
                 arrow_rect = arrow.get_rect(center=(button_rect.left - 20, button_rect.centery))
                 self.screen.blit(arrow, arrow_rect)
-            elif key == "blue":
+            elif key == "yellow":
                 arrow = arrow_font.render("↓", True, WHITE)
                 arrow_rect = arrow.get_rect(center=(button_rect.centerx, button_rect.bottom + 20))
                 self.screen.blit(arrow, arrow_rect)

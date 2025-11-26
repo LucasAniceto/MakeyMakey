@@ -59,10 +59,10 @@ class SnakeGame:
                         self.direction = (-1, 0)
                     elif event.key == pygame.K_RIGHT and self.direction != (-1, 0):
                         self.direction = (1, 0)
-                    elif event.key == pygame.K_UP and self.direction != (0, 1):
-                        self.direction = (0, -1)
-                    elif event.key == pygame.K_DOWN and self.direction != (0, -1):
+                    elif event.key == pygame.K_UP and self.direction != (0, -1):
                         self.direction = (0, 1)
+                    elif event.key == pygame.K_DOWN and self.direction != (0, 1):
+                        self.direction = (0, -1)
 
         return True
     

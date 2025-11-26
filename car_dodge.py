@@ -43,10 +43,10 @@ class Car:
             self.x -= self.speed * dt
         if keys[pygame.K_RIGHT] and self.x < ROAD_X + ROAD_WIDTH - CAR_WIDTH:
             self.x += self.speed * dt
-        if keys[pygame.K_UP] and self.y > 0:
-            self.y -= self.speed * dt
-        if keys[pygame.K_DOWN] and self.y < WINDOW_HEIGHT - CAR_HEIGHT:
+        if keys[pygame.K_UP] and self.y < WINDOW_HEIGHT - CAR_HEIGHT:
             self.y += self.speed * dt
+        if keys[pygame.K_DOWN] and self.y > 0:
+            self.y -= self.speed * dt
             
         self.rect.x = int(self.x)
         self.rect.y = int(self.y)
