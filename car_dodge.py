@@ -99,7 +99,7 @@ class Obstacle:
 class CarDodgeGame:
     def __init__(self):
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-        pygame.display.set_caption("Car Dodge - Classic Arcade")
+        pygame.display.set_caption("Desviar de Carros - Arcade Clássico")
         self.clock = pygame.time.Clock()
         
         self.car = Car()
@@ -216,8 +216,8 @@ class CarDodgeGame:
         
         if self.game_over:
             # Game over screen
-            game_over_text = self.font.render("GAME OVER", True, RED)
-            restart_text = self.small_font.render("Pressione SPACE para reiniciar", True, WHITE)
+            game_over_text = self.font.render("FIM DE JOGO", True, RED)
+            restart_text = self.small_font.render("Pressione ESPAÇO para reiniciar", True, WHITE)
             final_score = self.small_font.render(f"Pontuação Final: {self.score}", True, WHITE)
             
             game_over_rect = game_over_text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 - 40))

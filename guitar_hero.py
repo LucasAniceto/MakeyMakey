@@ -67,7 +67,7 @@ class Note:
 class GuitarHero:
     def __init__(self):
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-        pygame.display.set_caption("Guitar Hero Prototype")
+        pygame.display.set_caption("Herói da Guitarra - Protótipo")
         self.clock = pygame.time.Clock()
         
         button_spacing = (WINDOW_WIDTH - (4 * BUTTON_WIDTH)) // 5
@@ -147,19 +147,19 @@ class GuitarHero:
     def draw(self):
         self.screen.fill(BLACK)
         
-        title = self.font.render("Guitar Hero Prototype", True, WHITE)
+        title = self.font.render("Herói da Guitarra - Protótipo", True, WHITE)
         title_rect = title.get_rect(center=(WINDOW_WIDTH // 2, 30))
         self.screen.blit(title, title_rect)
-        
-        score_text = pygame.font.Font(None, 24).render(f"Score: {self.score}", True, WHITE)
+
+        score_text = pygame.font.Font(None, 24).render(f"Pontuação: {self.score}", True, WHITE)
         self.screen.blit(score_text, (20, 20))
-        
-        stats_text = pygame.font.Font(None, 24).render(f"Hits: {self.hits} | Misses: {self.misses}", True, WHITE)
+
+        stats_text = pygame.font.Font(None, 24).render(f"Acertos: {self.hits} | Erros: {self.misses}", True, WHITE)
         self.screen.blit(stats_text, (20, 50))
-        
+
         instructions = [
-            "← Yellow  ↓ Green  ↑ Blue  → Red",
-            "Hit the notes when they reach the buttons!"
+            "← Amarelo  ↓ Verde  ↑ Azul  → Vermelho",
+            "Acerte as notas quando chegarem aos botões!"
         ]
         
         for i, instruction in enumerate(instructions):

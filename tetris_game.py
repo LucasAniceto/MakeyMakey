@@ -101,7 +101,7 @@ class TetrisPiece:
 class TetrisGame:
     def __init__(self):
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-        pygame.display.set_caption("Simple Tetris")
+        pygame.display.set_caption("Tétris Simples")
         self.clock = pygame.time.Clock()
         
         self.grid = [[0 for _ in range(GRID_WIDTH)] for _ in range(GRID_HEIGHT)]
@@ -277,23 +277,23 @@ class TetrisGame:
     
     def draw_ui(self):
         # Title
-        title = self.font.render("Simple Tetris", True, WHITE)
+        title = self.font.render("Tétris Simples", True, WHITE)
         self.screen.blit(title, (GAME_AREA_X + GRID_WIDTH * BLOCK_SIZE + 20, 50))
-        
+
         # Score
-        score_text = self.small_font.render(f"Score: {self.score}", True, WHITE)
+        score_text = self.small_font.render(f"Pontuação: {self.score}", True, WHITE)
         self.screen.blit(score_text, (GAME_AREA_X + GRID_WIDTH * BLOCK_SIZE + 20, 100))
-        
+
         # Lines
-        lines_text = self.small_font.render(f"Lines: {self.lines_cleared}", True, WHITE)
+        lines_text = self.small_font.render(f"Linhas: {self.lines_cleared}", True, WHITE)
         self.screen.blit(lines_text, (GAME_AREA_X + GRID_WIDTH * BLOCK_SIZE + 20, 130))
         
         # Controls
         controls = [
-            "← Move Left",
-            "→ Move Right", 
-            "↓ Move Down",
-            "↑ Rotate"
+            "← Mover Esquerda",
+            "→ Mover Direita",
+            "↓ Mover Baixo",
+            "↑ Girar"
         ]
         
         for i, control in enumerate(controls):
@@ -302,10 +302,10 @@ class TetrisGame:
         
         # Piece colors
         color_info = [
-            ("Blue Line", BLUE),
-            ("Yellow Square", YELLOW),
-            ("Green L", GREEN),
-            ("Red T", RED)
+            ("Linha Azul", BLUE),
+            ("Quadrado Amarelo", YELLOW),
+            ("L Verde", GREEN),
+            ("T Vermelho", RED)
         ]
         
         for i, (name, color) in enumerate(color_info):
@@ -313,8 +313,8 @@ class TetrisGame:
             self.screen.blit(text, (GAME_AREA_X + GRID_WIDTH * BLOCK_SIZE + 20, 350 + i * 25))
         
         if self.game_over:
-            game_over_text = self.font.render("GAME OVER", True, RED)
-            restart_text = self.small_font.render("Press SPACE to restart", True, WHITE)
+            game_over_text = self.font.render("FIM DE JOGO", True, RED)
+            restart_text = self.small_font.render("Pressione ESPAÇO para reiniciar", True, WHITE)
             
             self.screen.blit(game_over_text, (GAME_AREA_X + GRID_WIDTH * BLOCK_SIZE + 20, 500))
             self.screen.blit(restart_text, (GAME_AREA_X + GRID_WIDTH * BLOCK_SIZE + 20, 540))

@@ -232,17 +232,17 @@ class MagicButton:
 class MagicButtons:
     def __init__(self):
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-        pygame.display.set_caption("Magic Buttons")
+        pygame.display.set_caption("Botões Mágicos")
         self.clock = pygame.time.Clock()
         
         button_start_x = (WINDOW_WIDTH - (4 * BUTTON_SIZE + 3 * BUTTON_SPACING)) // 2
         button_y = WINDOW_HEIGHT - 100
         
         self.buttons = [
-            MagicButton(button_start_x, button_y, YELLOW, "firework", "Fireworks"),
-            MagicButton(button_start_x + BUTTON_SIZE + BUTTON_SPACING, button_y, GREEN, "star", "Stars"),
-            MagicButton(button_start_x + 2 * (BUTTON_SIZE + BUTTON_SPACING), button_y, BLUE, "flower", "Flowers"),
-            MagicButton(button_start_x + 3 * (BUTTON_SIZE + BUTTON_SPACING), button_y, RED, "heart", "Hearts")
+            MagicButton(button_start_x, button_y, YELLOW, "firework", "Fogos"),
+            MagicButton(button_start_x + BUTTON_SIZE + BUTTON_SPACING, button_y, GREEN, "star", "Estrelas"),
+            MagicButton(button_start_x + 2 * (BUTTON_SIZE + BUTTON_SPACING), button_y, BLUE, "flower", "Flores"),
+            MagicButton(button_start_x + 3 * (BUTTON_SIZE + BUTTON_SPACING), button_y, RED, "heart", "Corações")
         ]
         
         self.particles = []
@@ -356,23 +356,23 @@ class MagicButtons:
             particle.draw(self.screen)
         
         # Draw title
-        title = self.font.render("Magic Buttons", True, WHITE)
+        title = self.font.render("Botões Mágicos", True, WHITE)
         title_rect = title.get_rect(center=(WINDOW_WIDTH // 2, 80))
         self.screen.blit(title, title_rect)
-        
+
         # Draw instruction
-        instruction = self.small_font.render("Press arrow keys to create magic!", True, WHITE)
+        instruction = self.small_font.render("Aperte as setas para criar magia!", True, WHITE)
         inst_rect = instruction.get_rect(center=(WINDOW_WIDTH // 2, 120))
         self.screen.blit(instruction, inst_rect)
-        
+
         # Draw controls
-        controls = ["← Fireworks", "↓ Stars", "↑ Flowers", "→ Hearts"]
+        controls = ["← Fogos", "↓ Estrelas", "↑ Flores", "→ Corações"]
         for i, control in enumerate(controls):
             color = [YELLOW, GREEN, BLUE, RED][i]
             text = self.small_font.render(control, True, color)
             self.screen.blit(text, (20, 20 + i * 30))
-        
-        clear_text = self.small_font.render("SPACE - Clear", True, WHITE)
+
+        clear_text = self.small_font.render("ESPAÇO - Limpar", True, WHITE)
         self.screen.blit(clear_text, (20, 140))
         
         # Draw magic particles

@@ -23,7 +23,7 @@ DARK_GREEN = (0, 150, 0)
 class SnakeGame:
     def __init__(self):
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-        pygame.display.set_caption("Snake Game - 4 Color Controls")
+        pygame.display.set_caption("Jogo da Cobrinha - 4 Cores")
         self.clock = pygame.time.Clock()
         
         self.snake = [(GRID_WIDTH // 2, GRID_HEIGHT // 2)]
@@ -108,14 +108,14 @@ class SnakeGame:
         food_rect = pygame.Rect(self.food[0] * GRID_SIZE, self.food[1] * GRID_SIZE, GRID_SIZE, GRID_SIZE)
         pygame.draw.rect(self.screen, RED, food_rect)
         
-        score_text = self.font.render(f"Score: {self.score}", True, WHITE)
+        score_text = self.font.render(f"Pontuação: {self.score}", True, WHITE)
         self.screen.blit(score_text, (WINDOW_WIDTH - 150, 20))
         
         self.draw_control_guide()
         
         if self.game_over:
-            game_over_text = self.font.render("GAME OVER", True, WHITE)
-            restart_text = self.small_font.render("Press SPACE to restart", True, WHITE)
+            game_over_text = self.font.render("FIM DE JOGO", True, WHITE)
+            restart_text = self.small_font.render("Pressione ESPAÇO para reiniciar", True, WHITE)
             
             game_over_rect = game_over_text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 - 20))
             restart_rect = restart_text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 20))

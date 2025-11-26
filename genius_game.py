@@ -37,7 +37,7 @@ INNER_RADIUS = CIRCLE_RADIUS // 6
 class GeniusGame:
     def __init__(self):
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.FULLSCREEN)
-        pygame.display.set_caption("JOGO DA MEMORIA GENIUS")
+        pygame.display.set_caption("Jogo de Memória Genius")
         self.clock = pygame.time.Clock()
         
         self.sequence = []

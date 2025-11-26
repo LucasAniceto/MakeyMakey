@@ -312,7 +312,7 @@ class QuizGame:
             "yellow": {
                 "pos": (center_x - 250, center_y),
                 "color": YELLOW,
-                "label": "←\nAMRELO\nCUIDDO"
+                "label": "←\nAMRELO\nCUIDADO"
             },
             "red": {
                 "pos": (center_x + 150, center_y),
